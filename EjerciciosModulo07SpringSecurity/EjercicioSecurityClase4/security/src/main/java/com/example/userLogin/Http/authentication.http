@@ -1,0 +1,12 @@
+###
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "Cesar Uagusto Diaz",
+  "userName": "cdizss",
+  "password": "cdiaz123",
+  "role": "ADMIN",
+  "email": "cdiaz@gmail"
+  }
