@@ -10,3 +10,17 @@ Content-Type: application/json
   "role": "ADMIN",
   "email": "cdiaz@gmail"
   }
+
+
+###
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "Maria Estela Lopez",
+  "userName": "mlopez",
+  "password": "mlopez123",
+  "role": "USER",
+  "email": "marialopez@gmail"
+  }

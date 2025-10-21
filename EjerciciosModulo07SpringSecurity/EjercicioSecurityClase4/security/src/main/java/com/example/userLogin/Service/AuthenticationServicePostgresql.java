@@ -1,8 +1,8 @@
 package com.example.userLogin.Service;
 
 import org.springframework.stereotype.Service;
-
 import com.example.userLogin.Mappers.UserMapper;
+import com.example.userLogin.Model.DTO.LoginRequest;
 import com.example.userLogin.Model.DTO.RegisterRequest;
 import com.example.userLogin.Model.DTO.RegisterResponse;
 import com.example.userLogin.Repository.UserRepository;
@@ -11,10 +11,11 @@ import com.example.userLogin.Repository.UserRepository;
 public class AuthenticationServicePostgresql implements AuthenticationService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper = new UserMapper();
+    private final UserMapper userMapper;
 
     public AuthenticationServicePostgresql(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -36,6 +37,11 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
 
         // Devuelvo el response
         return reponse;
+    }
+
+    @Override
+    public void login(LoginRequest body) {
+        
     }
     
 }
