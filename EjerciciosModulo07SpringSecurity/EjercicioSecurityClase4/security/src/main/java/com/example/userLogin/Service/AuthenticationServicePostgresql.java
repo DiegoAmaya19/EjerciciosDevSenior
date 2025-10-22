@@ -1,6 +1,9 @@
 package com.example.userLogin.Service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.userLogin.Exception.BadLoginException;
 import com.example.userLogin.Mappers.UserMapper;
 import com.example.userLogin.Model.DTO.LoginRequest;
 import com.example.userLogin.Model.DTO.RegisterRequest;
@@ -12,10 +15,13 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationServicePostgresql(UserRepository userRepository, UserMapper userMapper) {
+    public AuthenticationServicePostgresql(UserRepository userRepository, UserMapper userMapper,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -40,8 +46,12 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
     }
 
     @Override
-    public void login(LoginRequest body) {
-        
+    public void login(LoginRequest credencials) {
+        if (userRepository.existsByUsernameAndPassword(
+                credencials.getUserName(),
+                passwordEncoder.encode(credencials.getPassword()))) {
+                    throw new BadLoginException("Usuario o contraseña incorrecta");
+        }
     }
-    
+
 }

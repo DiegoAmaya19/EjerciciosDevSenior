@@ -19,12 +19,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         
-        var user = userRepository.findById(username)
+        var userInfo = userRepository.findById(username)
             .orElseThrow(() -> new UsernameNotFoundException("Este usuario no existe " + username));
 
         var response = User.builder()
-            .username(user.getUsername())
-            .password(user.getPassword())
+            .username(userInfo.getUsername())
+            .password(userInfo.getPassword())
             .roles("USER")
             .build();
         
