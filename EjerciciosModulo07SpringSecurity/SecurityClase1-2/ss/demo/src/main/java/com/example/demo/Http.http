@@ -1,0 +1,23 @@
+###
+GET http://localhost:8080
+
+###
+GET http://localhost:8080/security
+Authorization: Basic ZGFtYXlhOmRhbWF5YTEyMzQ=
+
+###
+GET http://localhost:8080/public/endPoint
+Authorization: Basic ZmVybmFuZGE6ZmVybmFuZGExMjM0
+
+###
+POST http://localhost:8080/security
+Authorization: Basic ZmVybmFuZGE6ZmVybmFuZGExMjM0
+Content-Type: application/json
+
+{
+    "name": "Fernanda"
+}
+
+###
+DELETE http://localhost:8080/security/delete/64
+Authorization: Basic THVpczpsdWlzRGV0ZWxl
