@@ -6,3 +6,6 @@ GET http://localhost:8080/api/response-entity/suma/10/20
 
 ###
 GET http://localhost:8080/api/response-entity/suma/3/_ 
+
+###
+GET http://localhost:8080/api/exception/suma/58/78
