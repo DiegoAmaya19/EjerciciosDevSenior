@@ -1,0 +1,18 @@
+###
+GET http://localhost:8080/api/response-status/ok
+
+###
+GET http://localhost:8080/api/response-status/created
+
+###
+GET http://localhost:8080/api/response-status/no-content
+
+###
+GET http://localhost:8080/api/response-status/bad-request
+
+###
+GET http://localhost:8080/api/response-status/not-found
+
+###
+GET http://localhost:8080/api/response-status/no-content
+

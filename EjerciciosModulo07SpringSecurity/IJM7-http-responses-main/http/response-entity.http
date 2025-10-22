@@ -1,0 +1,8 @@
+###
+GET http://localhost:8080/api/response-entity/string-list
+
+###
+GET http://localhost:8080/api/response-entity/suma/10/20
+
+###
+GET http://localhost:8080/api/response-entity/suma/3/_ 
