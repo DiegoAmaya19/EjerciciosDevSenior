@@ -1,0 +1,12 @@
+package com.example.userLogin.Service;
+
+import java.util.Map;
+
+import org.springframework.security.core.userdetails.UserDetails;
+
+public interface JwtService {
+    String generateToken(UserDetails userDetails);
+    String generateToken(Map<String, Object> claims, UserDetails userDetails);
+    Object extractUsername(String jwt);
+    boolean isTokenExpired(String token);
+}
