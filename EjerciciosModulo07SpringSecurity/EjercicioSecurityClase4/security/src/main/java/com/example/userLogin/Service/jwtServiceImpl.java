@@ -49,19 +49,19 @@ public class jwtServiceImpl implements JwtService {
 
     @Override
     public boolean isTokenExpired(String token) {
-        return extractClaim(token).before(new Date());
+        return extractExpiration(token).before(new Date());
     }
-
-    private Date extractExpiration(String token) {
-        return extractClaim(token).before(new Date());
-    }
-
+    
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         var username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+    
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver){
         var claims = extractAllClaims(token);
         return claimResolver.apply(claims);
@@ -77,4 +77,3 @@ public class jwtServiceImpl implements JwtService {
                 .getPayload();
     }
 }
-
