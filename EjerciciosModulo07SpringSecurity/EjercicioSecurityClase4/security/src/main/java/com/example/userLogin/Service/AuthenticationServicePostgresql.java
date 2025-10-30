@@ -1,5 +1,6 @@
 package com.example.userLogin.Service;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,18 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
         // passwordEncoder.encode(credencials.getPassword()))) {
         // throw new BadLoginException("Usuario o contraseña incorrecta");
         // }
+
+        /* Usando el metodo de AutheticationManager 
+           authenticate le pasamos un objeto de tipo 
+           UsernamePasswordAuthenticationToken que a su 
+           vez recibe como parámetro username y contraseña
+           esto es para validar las credenciales de login o
+           el usuario */
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        credentials.getUsername(),
+                        credentials.getPassword()));
 
         userRepository.findById(credencials.getUserName())
                 .filter(user -> passwordEncoder.matches(credencials.getPassword(), user.getPassword()))
