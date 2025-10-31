@@ -2,11 +2,11 @@ package com.example.userLogin.Service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import com.example.userLogin.Exception.BadLoginException;
 import com.example.userLogin.Mappers.UserMapper;
 import com.example.userLogin.Model.DTO.LoginRequest;
+import com.example.userLogin.Model.DTO.LoginResponse;
 import com.example.userLogin.Model.DTO.RegisterRequest;
 import com.example.userLogin.Model.DTO.RegisterResponse;
 import com.example.userLogin.Repository.UserRepository;
@@ -19,8 +19,9 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtService jwtService;
 
     @Override
     public RegisterResponse register(RegisterRequest userInfo) {
@@ -44,29 +45,38 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
     }
 
     @Override
-    public void login(LoginRequest credentials) {
+    public LoginResponse login(LoginRequest credentials) {
 
-        /* if (userRepository.existsByUsernameAndPassword(
-           credencials.getUserName(),
-           passwordEncoder.encode(credencials.getPassword()))) {
-           throw new BadLoginException("Usuario o contraseña incorrecta");
-           } */
+        /*
+         * if (userRepository.existsByUsernameAndPassword(
+         * credencials.getUserName(),
+         * passwordEncoder.encode(credencials.getPassword()))) {
+         * throw new BadLoginException("Usuario o contraseña incorrecta");
+         * }
+         */
 
-        /* Usando el metodo de AutheticationManager 
-           authenticate le pasamos un objeto de tipo 
-           UsernamePasswordAuthenticationToken que a su 
-           vez recibe como parámetro username y contraseña
-           esto es para validar las credenciales de login o
-           el usuario */
+        /*
+         * Usando el metodo de AutheticationManager
+         * authenticate le pasamos un objeto de tipo
+         * UsernamePasswordAuthenticationToken que a su
+         * vez recibe como parámetro username y contraseña
+         * esto es para validar las credenciales de login o
+         * el usuario
+         */
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         credentials.getUserName(),
                         credentials.getPassword()));
 
-        userRepository.findById(credentials.getUserName())
-                .filter(user -> passwordEncoder.matches(credentials.getPassword(), user.getPassword()))
-                .orElseThrow(() -> new BadLoginException("Usuario o contraseña incorrecta"));
+        var userDetails = userDetailsService.loadUserByUsername(credentials.getUserName());
+        // Generar el token JWT
+        var jwt = jwtService.generateToken(userDetails);
+
+        return LoginResponse.builder()
+                .jwt(jwt)
+                .build();
+
     }
 
 }

@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         var userInfo = userRepository.findById(username)
             .orElseThrow(() -> new UsernameNotFoundException("Este usuario no existe " + username));
 
-        var response = User.builder()
+        UserDetails response = User.builder()
             .username(userInfo.getUsername())
             .password(userInfo.getPassword())
             .roles("USER")
