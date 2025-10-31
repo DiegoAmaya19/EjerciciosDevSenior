@@ -1,9 +1,9 @@
 package com.example.userLogin.Service;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.userLogin.Exception.BadLoginException;
 import com.example.userLogin.Mappers.UserMapper;
 import com.example.userLogin.Model.DTO.LoginRequest;
@@ -11,19 +11,16 @@ import com.example.userLogin.Model.DTO.RegisterRequest;
 import com.example.userLogin.Model.DTO.RegisterResponse;
 import com.example.userLogin.Repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class AuthenticationServicePostgresql implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
-    public AuthenticationServicePostgresql(UserRepository userRepository, UserMapper userMapper,
-            PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public RegisterResponse register(RegisterRequest userInfo) {
@@ -47,12 +44,13 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
     }
 
     @Override
-    public void login(LoginRequest credencials) {
-        // if (userRepository.existsByUsernameAndPassword(
-        // credencials.getUserName(),
-        // passwordEncoder.encode(credencials.getPassword()))) {
-        // throw new BadLoginException("Usuario o contraseña incorrecta");
-        // }
+    public void login(LoginRequest credentials) {
+
+        /* if (userRepository.existsByUsernameAndPassword(
+           credencials.getUserName(),
+           passwordEncoder.encode(credencials.getPassword()))) {
+           throw new BadLoginException("Usuario o contraseña incorrecta");
+           } */
 
         /* Usando el metodo de AutheticationManager 
            authenticate le pasamos un objeto de tipo 
@@ -63,11 +61,11 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        credentials.getUsername(),
+                        credentials.getUserName(),
                         credentials.getPassword()));
 
-        userRepository.findById(credencials.getUserName())
-                .filter(user -> passwordEncoder.matches(credencials.getPassword(), user.getPassword()))
+        userRepository.findById(credentials.getUserName())
+                .filter(user -> passwordEncoder.matches(credentials.getPassword(), user.getPassword()))
                 .orElseThrow(() -> new BadLoginException("Usuario o contraseña incorrecta"));
     }
 
