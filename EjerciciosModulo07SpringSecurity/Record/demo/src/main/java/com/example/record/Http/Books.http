@@ -1,0 +1,15 @@
+###
+GET http://localhost:8080/api/books/getBooks
+
+###
+POST http://localhost:8080/api/books/postBooks
+Content-Type: application/json
+
+{
+    "title": "La culpa es de la vaca",
+    "suthor": "Jose de Maria",
+    "descripcion": "Habla de reflexiones"
+}
+
+###
+GET http://localhost:8080/api/books/Quijote de la mancha
