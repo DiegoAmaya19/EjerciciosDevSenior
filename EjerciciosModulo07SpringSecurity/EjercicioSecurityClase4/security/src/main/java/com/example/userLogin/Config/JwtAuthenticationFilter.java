@@ -4,7 +4,7 @@ import java.io.IOException;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,7 +20,6 @@ import lombok.AllArgsConstructor;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
 
     // GET localhost:8080/api/users
     // Authorization: Bearer XXXXXX.ZZZZZ
@@ -38,11 +37,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        var jwt = authHeader.substring(7); //Obtenemos un JWT que es un String de en el HTTP
-        var username = jwtService.extractUsername(jwt); //Atraves del servicio obtenemos el subject, con la interfaz Claims
+        var jwt = authHeader.substring(7); // Obtenemos un JWT que es un String de en el HTTP
+        var username = jwtService.extractUsername(jwt); // Atraves del servicio obtenemos el subject, con la interfaz
+                                                        // Claims
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            var userDetails = userDetailsService.loadUserByUsername(username);
+            // var userDetails = userDetailsService.loadUserByUsername(username);
+            var role = jwtService.extractRole(jwt);
+            var userDetails = User.builder()
+                    .username(username)
+                    .password("Nothing")
+                    .roles(role)
+                    .build();
+
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 var authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
