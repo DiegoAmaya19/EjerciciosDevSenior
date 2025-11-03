@@ -10,7 +10,6 @@ import com.example.userLogin.Model.DTO.LoginResponse;
 import com.example.userLogin.Model.DTO.RegisterRequest;
 import com.example.userLogin.Model.DTO.RegisterResponse;
 import com.example.userLogin.Repository.UserRepository;
-
 import lombok.AllArgsConstructor;
 
 @Service

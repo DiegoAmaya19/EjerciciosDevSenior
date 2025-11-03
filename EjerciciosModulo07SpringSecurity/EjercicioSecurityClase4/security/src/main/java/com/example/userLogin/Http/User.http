@@ -1,0 +1,17 @@
+###
+GET  http://localhost:8080/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZGl6c3MiLCJpYXQiOjE3NjIxODExMTEsImV4cCI6MTc2MjI2NzUxMX0.DHUEkV3jojAmEyfOfKrwtKP4mipOOY49-KVexscpV3w
+Accept: application/json
+
+###
+POST http://localhost:8080/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZGl6c3MiLCJpYXQiOjE3NjIxODQ1MDUsImV4cCI6MTc2MjI3MDkwNX0.keLWG-7g8VWqm3j5_uukipV07oh40yblWn2gYT1gmeM
+Content-Type: application/json
+
+{
+  "name": "Juan Torres",
+  "userName": "jtorres",
+  "password": "jtorres123",
+  "role": "USER",
+  "email": "jtorres@gmail"
+  }

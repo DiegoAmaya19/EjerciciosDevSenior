@@ -38,8 +38,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        var jwt = authHeader.substring(7);
-        var username = jwtService.extractUsername(jwt);
+        var jwt = authHeader.substring(7); //Obtenemos un JWT que es un String de en el HTTP
+        var username = jwtService.extractUsername(jwt); //Atraves del servicio obtenemos el subject, con la interfaz Claims
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userDetailsService.loadUserByUsername(username);

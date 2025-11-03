@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.userLogin.Model.DTO.LoginRequest;
+import com.example.userLogin.Model.DTO.LoginResponse;
 import com.example.userLogin.Model.DTO.RegisterRequest;
 import com.example.userLogin.Model.DTO.RegisterResponse;
 import com.example.userLogin.Service.AuthenticationService;
@@ -25,8 +26,8 @@ public class AuthenticationController {
     }
     
     @PostMapping("/login")
-    public void login(@RequestBody @Valid LoginRequest body) {
-        authenticationService.login(body);
+    public LoginResponse login(@RequestBody @Valid LoginRequest body) {
+        return authenticationService.login(body);
     }
 
     @ResponseStatus(code =  HttpStatus.CREATED)
