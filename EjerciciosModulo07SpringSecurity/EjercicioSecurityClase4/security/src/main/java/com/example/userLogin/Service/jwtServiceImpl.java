@@ -14,13 +14,13 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class jwtServiceImpl implements JwtService {
- 
+
     @Value("${jwt.secret}")
     private String secret;
 
     @Value("${jwt.expiration}")
     private Long expiration;
-   
+
     @Override
     public String generateToken(UserDetails userDetails) {
         return generateToken(Map.of(), userDetails);
@@ -48,10 +48,20 @@ public class jwtServiceImpl implements JwtService {
     }
 
     @Override
+    public String extractName(String token) {
+        return extractClaim(token, c -> c.get("name").toString());
+    }
+
+    @Override
+    public String extractRole(String token) {
+        return extractClaim(token, c -> c.get("Role").toString());
+    }
+
+    @Override
     public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-    
+
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         var username = extractUsername(token);
@@ -61,8 +71,8 @@ public class jwtServiceImpl implements JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-    
-    private <T> T extractClaim(String token, Function<Claims, T> claimResolver){
+
+    private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         var claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }

@@ -1,17 +1,17 @@
 ###
 GET  http://localhost:8080/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZGl6c3MiLCJpYXQiOjE3NjIxODExMTEsImV4cCI6MTc2MjI2NzUxMX0.DHUEkV3jojAmEyfOfKrwtKP4mipOOY49-KVexscpV3w
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQ2VzYXIgVWFndXN0byBEaWF6IiwiUm9sZSI6IkFETUlOIiwic3ViIjoiY2RpenNzIiwiaWF0IjoxNzYyMTkwNzkwLCJleHAiOjE3NjIxOTA4OTB9.f179NAOw1l30DV1t5oreFq7NXrGjokceEhFMooBaRy4
 Accept: application/json
 
 ###
 POST http://localhost:8080/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZGl6c3MiLCJpYXQiOjE3NjIxODQ1MDUsImV4cCI6MTc2MjI3MDkwNX0.keLWG-7g8VWqm3j5_uukipV07oh40yblWn2gYT1gmeM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQ2VzYXIgVWFndXN0byBEaWF6IiwiUm9sZSI6IkFETUlOIiwic3ViIjoiY2RpenNzIiwiaWF0IjoxNzYyMTkxMTMyLCJleHAiOjE3NjIxOTEyMzJ9.Ffvwp1tUbBFBVcobobjcRYZIWjLwEjcvXXcbJ9Ks1nM
 Content-Type: application/json
 
 {
-  "name": "Juan Torres",
-  "userName": "jtorres",
-  "password": "jtorres123",
+  "name": "Maria Suarez",
+  "userName": "msuarez",
+  "password": "msuarez123",
   "role": "USER",
-  "email": "jtorres@gmail"
+  "email": "msuarez@gmail"
   }

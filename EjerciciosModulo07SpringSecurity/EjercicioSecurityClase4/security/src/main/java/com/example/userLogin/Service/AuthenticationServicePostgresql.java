@@ -1,5 +1,6 @@
 package com.example.userLogin.Service;
 
+import java.util.Map;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -70,10 +71,21 @@ public class AuthenticationServicePostgresql implements AuthenticationService {
 
         var userDetails = userDetailsService.loadUserByUsername(credentials.getUserName());
         // Generar el token JWT
-        var jwt = jwtService.generateToken(userDetails);
+        // var token = jwtService.generateToken(userDetails);
+
+        var userInfo = userRepository.findById(credentials.getUserName());
+        Map<String, Object> claims = Map.of();
+
+        if (userInfo.isPresent()) { // Esto pregunta si el usuario tiene datos
+            claims = Map.<String, Object>of(
+                "name", userInfo.get().getName(),
+                 "Role", userInfo.get().getRole().toString());
+        }
+
+        var token = jwtService.generateToken(claims, userDetails);
 
         return LoginResponse.builder()
-                .jwt(jwt)
+                .jwt(token)
                 .build();
 
     }
