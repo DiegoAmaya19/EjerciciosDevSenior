@@ -1,9 +1,9 @@
-package com.example.record.Model;
+package com.example.record.Model.DTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record Book(
+public record BookDTO(
     @NotBlank(message = "es un campo obligatorio")
     @Size(min = 5, message="El titulo debe tener como minimo 5 letras")
     String title,
@@ -11,7 +11,7 @@ public record Book(
     String author,
     String descripcion) {
     
-    public Book{
+    public BookDTO{
         if (title.length() < 5) {
             throw new RuntimeException("El titulo es invalido");
         }
