@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.record.Model.DTO.BookDTO;
+import com.example.record.Service.BookService;
 
 @RestController
 @RequestMapping("/api/books")
@@ -17,8 +17,11 @@ public class BookController {
 
     private List<BookDTO> books = new ArrayList<>();
 
-    public BookController(){
+    private final BookService service;
+
+    public BookController(BookService service){
         this.books = new ArrayList<>();
+        this.service = service;
 
         books.add(new BookDTO("Quijote de la mancha", "Juan","Habla de un Don Loco"));
         books.add(new BookDTO("El hombre mas rico de babilonia","Thom Jan","Mejora de tu economia"));
@@ -27,22 +30,22 @@ public class BookController {
 
     @GetMapping("/getBooks")
     public List<BookDTO> getAllBooks(){
-        return books;
+        return service.getAll();
     }
 
     @GetMapping("/{title}")
     public BookDTO getBookByTitle(@PathVariable String title){
 
-        return books.stream()
-                .filter(b -> b.title().equals(title))
-                .findFirst()
-                .orElse(null);
+        // return books.stream()
+        //         .filter(b -> b.title().equals(title))
+        //         .findFirst()
+        //         .orElse(null);
+
+        return service.findByTitle(title);
     }
    
     @PostMapping("/postBooks")
     public BookDTO createBook(@RequestBody BookDTO entity){
-        books.add(entity);
-
-        return entity;
+        return service.create(entity);
     }
 }
