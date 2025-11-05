@@ -8,8 +8,6 @@ import com.example.record.Mapper.BookMapper;
 import com.example.record.Model.DTO.BookDTO;
 import com.example.record.Repository.BookRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 public class BookServiceImpl implements BookService{
 
