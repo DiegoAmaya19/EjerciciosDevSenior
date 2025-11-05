@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.record.Mapper.BookMapper;
 import com.example.record.Model.DTO.BookDTO;
-import com.example.record.Model.Entity.Book;
 import com.example.record.Repository.BookRepository;
+
+import jakarta.validation.Valid;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -22,16 +23,10 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookDTO create(BookDTO book) {
-
-        Book bookEntity = new Book();
-
-        bookEntity.setTitle(book.title());
-        bookEntity.setAuthor(book.author());
-        bookEntity.setDescripcion(book.descripcion());
+        var bookEntity = mapper.toEntity(book);
+        bookEntity = repository.save(bookEntity);
         
-        repository.save(bookEntity);
-        
-        return book;
+        return mapper.toBookDTO(bookEntity);
     }
 
     @Override

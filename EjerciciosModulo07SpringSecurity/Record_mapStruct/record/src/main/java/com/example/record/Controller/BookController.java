@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.record.Model.DTO.BookDTO;
 import com.example.record.Service.BookService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -45,7 +47,7 @@ public class BookController {
     }
    
     @PostMapping("/postBooks")
-    public BookDTO createBook(@RequestBody BookDTO entity){
+    public BookDTO createBook(@RequestBody @Valid BookDTO entity){
         return service.create(entity);
     }
 }
